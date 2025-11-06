@@ -35,7 +35,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:shadow-2xl hover:scale-105 border-2 border-transparent hover:border-orange">
       <img
         src={item.imageUrl || 'https://placehold.co/600x400'}
         alt={item.name}
@@ -43,14 +43,14 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
       />
       
       <div className="p-4">
-        <h3 className="text-lg font-semibold">{item.name}</h3>
-        <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h3>
+        <p className="text-sm text-gray-700 mb-3 min-h-[40px]">{item.description}</p>
         
         <div className="flex justify-between items-center mb-4">
-          <span className="text-xl font-bold text-gray-800">
+          <span className="text-2xl font-bold text-orange">
             ${Number(item.price).toFixed(2)}
           </span>
-          <span className="text-sm text-gray-500">
+          <span className={`text-sm font-semibold ${item.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
             {item.stock > 0 ? `${item.stock} in stock` : 'Out of Stock'}
           </span>
         </div>
@@ -58,9 +58,13 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
         <button
           onClick={handleAddToCart}
           disabled={item.stock === 0}
-          className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:bg-gray-400"
+          className={`w-full py-3 rounded-lg font-semibold transition-all ${
+            item.stock > 0
+              ? 'bg-gradient-to-r from-primary-dark to-orange text-white hover:from-gray-800 hover:to-gray-900 shadow-md hover:shadow-lg'
+              : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+          }`}
         >
-          {item.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+          {item.stock > 0 ? '🛒 Add to Cart' : '❌ Out of Stock'}
         </button>
       </div>
     </div>
