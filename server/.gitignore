@@ -41,4 +41,7 @@ coverage/
 # OS files
 Thumbs.db
 
+# Prisma generated files
+prisma.config.js
+prisma.config.d.ts
 /src/generated/prisma
