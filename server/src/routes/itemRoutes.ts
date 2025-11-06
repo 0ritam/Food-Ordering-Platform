@@ -7,10 +7,8 @@ import {
 
 const router = Router();
 
-router.get("/categories", getAllCategories);
+router.get("/", getAllItems);
 
-router.get("/items", getAllItems);
-
-router.get("/items/:id", getItemById);
+router.get("/:id", getItemById);
 
 export default router;
