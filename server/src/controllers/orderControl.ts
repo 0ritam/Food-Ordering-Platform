@@ -7,71 +7,77 @@ export const createCheckout = async (req: any, res: Response) => {
   const userId = req.user.id;
 
   try {
-    const newOrder = await prisma.$transaction(async (tx) => {
-      const cart = await tx.cart.findUnique({
-        where: { userId },
-        include: {
-          items: {
-            include: {
-              item: true,
+    const newOrder = await prisma.$transaction(
+      async (tx) => {
+        const cart = await tx.cart.findUnique({
+          where: { userId },
+          include: {
+            items: {
+              include: {
+                item: true,
+              },
             },
           },
-        },
-      });
+        });
 
-      if (!cart || cart.items.length === 0) {
-        throw new Error("Your cart is empty.");
-      }
-
-      let totalAmount = 0;
-      const orderItemsData: Prisma.OrderItemCreateManyOrderInput[] = [];
-
-      for (const cartItem of cart.items) {
-        const item = cartItem.item;
-
-        if (cartItem.quantity > item.stock) {
-          throw new Error(`Not enough stock for ${item.name}.`);
+        if (!cart || cart.items.length === 0) {
+          throw new Error("Your cart is empty.");
         }
 
-        totalAmount += item.price.toNumber() * cartItem.quantity;
-        orderItemsData.push({
-          itemId: item.id,
-          quantity: cartItem.quantity,
-          priceAtPurchase: item.price,
-        });
-      }
+        let totalAmount = 0;
+        const orderItemsData: Prisma.OrderItemCreateManyOrderInput[] = [];
 
-      const order = await tx.order.create({
-        data: {
-          userId: userId,
-          totalAmount: totalAmount,
-          status: "PENDING",
-          items: {
-            createMany: {
-              data: orderItemsData,
-            },
-          },
-        },
-      });
+        for (const cartItem of cart.items) {
+          const item = cartItem.item;
 
-      const stockUpdatePromises = cart.items.map((cartItem) => {
-        return tx.item.update({
-          where: { id: cartItem.item.id },
+          if (cartItem.quantity > item.stock) {
+            throw new Error(`Not enough stock for ${item.name}.`);
+          }
+
+          totalAmount += item.price.toNumber() * cartItem.quantity;
+          orderItemsData.push({
+            itemId: item.id,
+            quantity: cartItem.quantity,
+            priceAtPurchase: item.price,
+          });
+        }
+
+        const order = await tx.order.create({
           data: {
-            stock: {
-              decrement: cartItem.quantity,
+            userId: userId,
+            totalAmount: totalAmount,
+            status: "PENDING",
+            items: {
+              createMany: {
+                data: orderItemsData,
+              },
             },
           },
         });
-      });
-      await Promise.all(stockUpdatePromises);
 
-      await tx.cartItem.deleteMany({
-        where: { cartId: cart.id },
-      });
+        const stockUpdatePromises = cart.items.map((cartItem) => {
+          return tx.item.update({
+            where: { id: cartItem.item.id },
+            data: {
+              stock: {
+                decrement: cartItem.quantity,
+              },
+            },
+          });
+        });
+        await Promise.all(stockUpdatePromises);
 
-      return order;
-    });
+        await tx.cartItem.deleteMany({
+          where: { cartId: cart.id },
+        });
+
+        return order;
+      },
+      {
+        maxWait: 5000, // Maximum time to wait for a transaction slot (ms)
+        timeout: 10000, // Maximum time the transaction can run (ms)
+      }
+    );
 
     res.status(201).json(newOrder);
   } catch (error: any) {

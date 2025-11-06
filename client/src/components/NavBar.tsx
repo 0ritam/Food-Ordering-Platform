@@ -25,6 +25,12 @@ const Navbar: React.FC = () => {
           
           {user ? (
             <>
+              <Link to="/cart" className="text-white font-medium hover:text-gray-900 transition-colors">
+                🛒 Cart
+              </Link>
+              <Link to="/orders" className="text-white font-medium hover:text-gray-900 transition-colors">
+                📦 My Orders
+              </Link>
               <span className="text-white font-medium">Welcome, {user.email}!</span>
               <button
                 onClick={handleLogout}

@@ -8,6 +8,6 @@ router.use(protect);
 
 router.post("/checkout", createCheckout);
 
-router.get("/", getOrderHistory);
+router.get("/history", getOrderHistory);
 
 export default router;

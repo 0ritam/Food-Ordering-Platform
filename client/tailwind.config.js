@@ -12,7 +12,7 @@ export default {
          orange: {
            DEFAULT: '#FD9139',
            light: '#FCA65E',
-           dark: '#AD4728',
+           dark: '#D4461C',
          },
        },
      },
