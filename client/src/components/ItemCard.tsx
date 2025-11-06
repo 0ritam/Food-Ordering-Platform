@@ -60,7 +60,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
           disabled={item.stock === 0}
           className={`w-full py-3 rounded-lg font-semibold transition-all ${
             item.stock > 0
-              ? 'bg-gradient-to-r from-primary-dark to-orange text-white hover:from-gray-800 hover:to-gray-900 shadow-md hover:shadow-lg'
+              ? 'bg-gradient-to-r from-primary-dark to-orange text-black hover:from-gray-800 hover:to-light-500 shadow-md hover:shadow-lg'
               : 'bg-gray-400 text-gray-200 cursor-not-allowed'
           }`}
         >

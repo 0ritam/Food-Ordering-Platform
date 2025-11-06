@@ -75,21 +75,21 @@ const HomePage: React.FC = () => {
 
   // 7. Create the JSX
   return (
-    <div className="container mx-auto p-4 min-h-screen">
-      <h1 className="text-4xl font-bold text-center my-8 text-primary-dark">Our Menu</h1>
+    <div className="container mx-auto p-4 sm:p-6 lg:p-8 min-h-screen">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center my-6 sm:my-8 text-primary-dark">Our Menu</h1>
       
       {/* Show login prompt if user is not authenticated */}
       {!user ? (
-        <div className="max-w-2xl mx-auto mt-16 text-center">
-          <div className="bg-white rounded-xl shadow-2xl p-12 border-t-4 border-orange">
-            <div className="text-6xl mb-6">🍔🍕🍰</div>
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
+        <div className="max-w-2xl mx-auto mt-8 sm:mt-16 text-center px-4">
+          <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-12 border-t-4 border-orange">
+            <div className="text-5xl sm:text-6xl mb-6">🍔🍕🍰</div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-4">
               Welcome to FoodOrder!
             </h2>
-            <p className="text-gray-700 text-lg mb-8">
+            <p className="text-gray-700 text-base sm:text-lg mb-8">
               Please log in or register to view our delicious menu and start ordering.
             </p>
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/login"
                 className="bg-gradient-to-r from-primary-dark to-orange text-white px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
@@ -108,13 +108,13 @@ const HomePage: React.FC = () => {
       ) : (
         <>
           {/* 8. Category Filter Buttons */}
-          <div className="flex justify-center flex-wrap gap-3 mb-8">
+          <div className="flex justify-center flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 px-2">
             <button
               onClick={() => handleCategoryChange('All')}
-              className={`px-6 py-2 rounded-full font-semibold transition-all ${
+              className={`px-4 sm:px-6 py-2 rounded-full font-semibold transition-all text-sm sm:text-base ${
                 selectedCategory === 'All' 
                   ? 'bg-gradient-to-r from-primary-dark to-orange text-black shadow-lg transform scale-105' 
-                  : 'bg-white text-primary-dark border-2 border-orange hover:bg-gray-800 hover:text-black hover:border-gray-800'
+                  : 'bg-white text-primary-dark border-2 border-orange hover:bg-gray-800 hover:text-white hover:border-gray-800'
               }`}
             >
               All
@@ -123,10 +123,10 @@ const HomePage: React.FC = () => {
               <button
                 key={category.id}
                 onClick={() => handleCategoryChange(category.name)}
-                className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                className={`px-4 sm:px-6 py-2 rounded-full font-semibold transition-all text-sm sm:text-base ${
                   selectedCategory === category.name 
-                    ? 'bg-gradient-to-r from-primary-dark to-orange text-black shadow-lg transform scale-105' 
-                    : 'bg-white text-primary-dark border-2 border-orange hover:bg-gray-800 hover:text-black hover:border-gray-800'
+                    ? 'bg-gradient-to-r from-primary-light to-orange text-white shadow-lg transform scale-105' 
+                    : 'bg-white text-primary-dark border-2 border-orange hover:bg-gray-800 hover:text-white hover:border-gray-800'
                 }`}
               >
                 {category.name}
@@ -138,10 +138,10 @@ const HomePage: React.FC = () => {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark"></div>
-              <p className="text-primary-dark mt-4 text-lg font-semibold">Loading delicious items...</p>
+              <p className="text-primary-dark mt-4 text-base sm:text-lg font-semibold">Loading delicious items...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {filteredItems.map(item => (
                 <ItemCard key={item.id} item={item} />
               ))}

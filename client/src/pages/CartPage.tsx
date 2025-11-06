@@ -81,14 +81,14 @@ const CartPage: React.FC = () => {
   // 12. Handle empty cart state
   if (!cart || cart.items.length === 0) {
     return (
-      <div className="container mx-auto p-4 max-w-2xl mt-16">
-        <div className="bg-white rounded-xl shadow-2xl p-12 text-center border-t-4 border-orange">
-          <div className="text-6xl mb-6">🛒</div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-          <p className="text-gray-600 mb-8">Add some delicious items to get started!</p>
+      <div className="container mx-auto p-4 max-w-2xl mt-8 sm:mt-16">
+        <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-12 text-center border-t-4 border-orange">
+          <div className="text-5xl sm:text-6xl mb-6">🛒</div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
+          <p className="text-gray-600 mb-8 text-sm sm:text-base">Add some delicious items to get started!</p>
           <Link 
             to="/" 
-            className="inline-block bg-gradient-to-r from-primary-light to-orange text-white px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
+            className="inline-block bg-gradient-to-r from-primary-light to-orange text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
           >
             Go Shopping
           </Link>
@@ -98,25 +98,25 @@ const CartPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-3xl font-bold text-primary-dark my-6">Your Cart</h1>
+    <div className="container mx-auto p-4 sm:p-6 max-w-4xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-primary-dark my-4 sm:my-6">Your Cart</h1>
       
       
-      <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-gray-200">
+      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border-2 border-gray-200">
         {cart.items.map(cartItem => (
-          <div key={cartItem.id} className="flex justify-between items-center border-b border-gray-200 py-4 last:border-b-0">
-            <div className="flex items-center">
+          <div key={cartItem.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 py-4 last:border-b-0 gap-4">
+            <div className="flex items-center w-full sm:w-auto">
               <img 
                 src={cartItem.item.imageUrl || 'https://placehold.co/100x100'} 
                 alt={cartItem.item.name} 
-                className="w-20 h-20 object-cover rounded-lg mr-4 shadow"
+                className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg mr-4 shadow flex-shrink-0"
               />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">{cartItem.item.name}</h3>
-                <p className="text-gray-600 font-medium">Quantity: {cartItem.quantity}</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{cartItem.item.name}</h3>
+                <p className="text-gray-600 font-medium text-sm sm:text-base">Quantity: {cartItem.quantity}</p>
               </div>
             </div>
-            <span className="text-xl font-bold text-orange">
+            <span className="text-lg sm:text-xl font-bold text-orange w-full sm:w-auto text-right">
               ${(Number(cartItem.item.price) * cartItem.quantity).toFixed(2)}
             </span>
             {/* Add remove/update buttons here if you have time */}
@@ -124,13 +124,13 @@ const CartPage: React.FC = () => {
         ))}
         
         
-        <div className="mt-6 pt-6 border-t-2 border-gray-300 flex justify-between items-center">
-          <span className="text-2xl font-bold text-gray-900">
+        <div className="mt-6 pt-6 border-t-2 border-gray-300 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <span className="text-xl sm:text-2xl font-bold text-gray-900 w-full sm:w-auto text-center sm:text-left">
             Total: <span className="text-orange">${calculateTotal().toFixed(2)}</span>
           </span>
           <button
             onClick={handleCheckout}
-            className="bg-gradient-to-r from-primary-dark to-orange text-white px-8 py-3 rounded-lg text-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
+            className="w-full sm:w-auto bg-gradient-to-r from-primary-dark to-orange text-white px-6 sm:px-8 py-3 rounded-lg text-base sm:text-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
           >
             💳 Pay and Proceed
           </button>

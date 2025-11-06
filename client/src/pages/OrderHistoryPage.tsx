@@ -82,14 +82,14 @@ const OrderHistoryPage: React.FC = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="container mx-auto p-4 max-w-2xl mt-16">
-        <div className="bg-white rounded-xl shadow-2xl p-12 text-center border-t-4 border-orange">
-          <div className="text-6xl mb-6">📦</div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">No orders yet</h2>
-          <p className="text-gray-600 mb-8">Start ordering delicious food today!</p>
+      <div className="container mx-auto p-4 max-w-2xl mt-8 sm:mt-16">
+        <div className="bg-white rounded-xl shadow-2xl p-8 sm:p-12 text-center border-t-4 border-orange">
+          <div className="text-5xl sm:text-6xl mb-6">📦</div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">No orders yet</h2>
+          <p className="text-gray-600 mb-8 text-sm sm:text-base">Start ordering delicious food today!</p>
           <Link 
             to="/" 
-            className="inline-block bg-gradient-to-r from-primary-dark to-orange text-white px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
+            className="inline-block bg-gradient-to-r from-primary-dark to-orange text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
           >
             Browse Menu
           </Link>
@@ -99,10 +99,10 @@ const OrderHistoryPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-5xl">
-      <h1 className="text-3xl font-bold text-primary-dark my-6">📦 Order History</h1>
+    <div className="container mx-auto p-4 sm:p-6 max-w-5xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-primary-dark my-4 sm:my-6">📦 Order History</h1>
       
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {orders.map((order) => (
           <div 
             key={order.id} 
@@ -110,43 +110,43 @@ const OrderHistoryPage: React.FC = () => {
           >
             {/* Order Header */}
             <div className="bg-gradient-to-r from-primary-light to-orange p-4 text-white">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div>
-                  <p className="text-sm opacity-90">Order ID: {order.id.slice(0, 8)}</p>
-                  <p className="text-lg font-semibold">{formatDate(order.createdAt)}</p>
+                  <p className="text-xs sm:text-sm opacity-90">Order ID: {order.id.slice(0, 8)}</p>
+                  <p className="text-base sm:text-lg font-semibold">{formatDate(order.createdAt)}</p>
                 </div>
-                <div className="text-right">
-                  <span className={`inline-block px-4 py-1 rounded-full text-sm font-semibold border-2 ${getStatusColor(order.status)}`}>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                  <span className={`inline-block px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold border-2 ${getStatusColor(order.status)}`}>
                     {order.status}
                   </span>
-                  <p className="text-2xl font-bold mt-2">${Number(order.totalAmount).toFixed(2)}</p>
+                  <p className="text-xl sm:text-2xl font-bold">${Number(order.totalAmount).toFixed(2)}</p>
                 </div>
               </div>
             </div>
 
             {/* Order Items */}
-            <div className="p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Items:</h3>
+            <div className="p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Items:</h3>
               <div className="space-y-3">
                 {order.items.map((orderItem) => (
                   <div 
                     key={orderItem.id} 
-                    className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border border-gray-200"
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 p-3 sm:p-4 rounded-lg border border-gray-200 gap-3"
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center w-full sm:w-auto">
                       <img 
                         src={orderItem.item.imageUrl || 'https://placehold.co/80x80'} 
                         alt={orderItem.item.name} 
-                        className="w-16 h-16 object-cover rounded-lg mr-4 shadow"
+                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg mr-3 sm:mr-4 shadow flex-shrink-0"
                       />
-                      <div>
-                        <h4 className="font-semibold text-gray-900">{orderItem.item.name}</h4>
-                        <p className="text-gray-600 text-sm">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{orderItem.item.name}</h4>
+                        <p className="text-gray-600 text-xs sm:text-sm">
                           ${Number(orderItem.priceAtPurchase).toFixed(2)} × {orderItem.quantity}
                         </p>
                       </div>
                     </div>
-                    <span className="text-lg font-bold text-orange">
+                    <span className="text-base sm:text-lg font-bold text-orange w-full sm:w-auto text-right">
                       ${(Number(orderItem.priceAtPurchase) * orderItem.quantity).toFixed(2)}
                     </span>
                   </div>
@@ -157,10 +157,10 @@ const OrderHistoryPage: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-8 text-center">
+      <div className="mt-6 sm:mt-8 text-center">
         <Link 
           to="/" 
-          className="inline-block bg-gradient-to-r from-primary-dark to-orange text-white px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
+          className="inline-block bg-gradient-to-r from-primary-dark to-orange text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-gray-900 transition-all shadow-lg"
         >
           ← Back to Menu
         </Link>
