@@ -4,7 +4,7 @@ A full-stack food ordering app where you can browse items, manage your cart, and
 
 ## Live Demo
 
-- **Frontend:** [[Your Vercel URL](https://food-ordering-platform-frontend-black.vercel.app/)]
+- **Frontend:** [[Visit](https://food-ordering-platform-frontend-black.vercel.app/)]
 - **Backend:** https://food-ordering-platform-backend-production.up.railway.app
 
 ## What It Does
